@@ -167,7 +167,25 @@ static void * Memory_Realloc(const mem_device_t * p , void * pDat , uint32_t siz
     
     uint32_t oldSize = Memory_Get_Malloc_Size(p , index) * blockSize ;
 
-    if(oldSize >= size) { return pDat ; }
+    uint32_t oldCount = (oldSize + blockSize - 1) / blockSize ;
+    uint32_t newCount = (size + blockSize - 1) / blockSize ;
+
+    if(oldCount >= newCount) { return pDat ; }
+
+    uint32_t diff = newCount - oldCount ; 
+    uint8_t isEmpty = 1 ;
+
+    for(uint32_t i = 0 ; i < diff ; i++)
+    {
+        if(Memory_Get_Table_Status(p , i + index + oldCount) != 0) { isEmpty = 0 ; break ; }
+    }
+
+    if(isEmpty)
+    {
+        Memory_Set_Malloc_Status(p , index + newCount -1 , diff+1) ;
+
+        return pDat ;
+    }
 
     uint8_t * pNewDat = Memory_Malloc(p , size) ;
 
