@@ -31,5 +31,7 @@ int main(void)
 
 	printf("hello main \n") ;
 	
+	printf("hello main \n") ;
+	
 	return 0 ;
 }
