@@ -182,7 +182,7 @@ static void * Memory_Realloc(const mem_device_t * p , void * pDat , uint32_t siz
 
     if(isEmpty)
     {
-        Memory_Set_Malloc_Status(p , index + newCount -1 , diff+1) ;
+        Memory_Set_Malloc_Status(p , index + newCount - 1 , diff + 1) ;
 
         return pDat ;
     }
